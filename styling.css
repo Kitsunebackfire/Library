@@ -227,9 +227,16 @@
     padding: 20px;
     font-size: 19px;
 }
-    #removal {
+    /*#removal {
         padding-right: 25px;
-    }
+    }*/
+
+.appendedBooks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+}
 
 .appendedBookInfo {
     max-height: 630px;

@@ -6,7 +6,7 @@ let pages = document.getElementById("pagesInput");
 let haveYouReadIt = document.getElementById("haveReadBox");
     // haveYouReadIt.checked must be passed externally in order to properly populate true or false
 
-const browsingTable = document.getElementsByClassName("appendedBookInfo");
+const browsingTable = document.querySelector('table');
 
 
 
@@ -24,16 +24,39 @@ function book(bookTitle, authorName, pages, haveYouReadIt) {
 
 function addBookToLibrary() {
     // do stuff here like appending a new div in order to display the object created in the newbook function
+    browsingTable.innerHTML = "";
+    
+    myLibrary.push(new book(bookTitle, authorName, pages, haveYouReadIt));
+    for(let i=0; i < myLibrary.length;i++) {
+        let template = `
+                    <tr class="appendedBooks">
+                        <td>${myLibrary[i].title}</td>
+                        <td>${myLibrary[i].author}</td>
+                        <td>${myLibrary[i].pages}</td>
+                        <td>${myLibrary[i].haveRead}</td>
+                        <td><button>press me</button></td>
+                    </tr>`
+        browsingTable.innerHTML += template;
+    }
+    
+    
+
+    //addRow();
     resetInputs();
 }
 
 
 function addRow() {
-    let row = browsingTable.insertRow(0);
-    let cell1 = row.insertCell(0);
-    let cell2 = row.insertCell(1);
-    cell1.innerHTML = "new cell 1";
-    cell2.innerHTML = "new cell 2";
+    
+    let template = `
+                    <tr class="appendedBooks">
+                        <td>${bookTitle.value}</td>
+                        <td>${authorName.value}</td>
+                        <td>${pages.value}</td>
+                        <td>${haveYouReadIt.checked}</td>
+                        <td><button>press me</button></td>
+                    </tr>`
+    browsingTable.innerHTML += template;
 
 }
 
@@ -53,4 +76,4 @@ function resetInputs() {
 
 }
 
-//addBookBtn.addEventListener('click', addBookToLibrary);
+addBookBtn.addEventListener('click', addBookToLibrary);
