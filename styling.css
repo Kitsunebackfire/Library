@@ -179,6 +179,7 @@
     grid-column-start: 3;
     grid-column-end: 4;
 
+
     min-width: 1000px;
 
     display: flex;
@@ -218,27 +219,30 @@
         }
 
 .bookInfoSection {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 2fr 2fr repeat(3, 1fr);
+    justify-items: left;
 
     color: #c0d0ea;
     background-color: #2e3f59;
     padding: 20px;
     font-size: 19px;
 }
-    /*#removal {
-        padding-right: 25px;
-    }*/
 
 .appendedBooks {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 2fr 2fr repeat(3, 1fr);
+    justify-items: left;
+    
+    padding: 20px;
+    border-bottom: 2px dotted;
+
     font-size: 14px;
 }
 
-.appendedBookInfo {
+.appendedTable {
+    display: grid;
+    grid-template-rows: 1fr;
     max-height: 630px;
     overflow-y: auto;
 }
