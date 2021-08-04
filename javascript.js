@@ -4,76 +4,92 @@ let bookTitle = document.getElementById("titleInput");
 let authorName = document.getElementById("authorInput");
 let pages = document.getElementById("pagesInput");
 let haveYouReadIt = document.getElementById("haveReadBox");
-    // haveYouReadIt.checked must be passed externally in order to properly populate true or false
+// haveYouReadIt.checked must be passed externally in order to properly populate true or false
+const bookForm = document.querySelector('.bookForm');
 
-const browsingTable = document.querySelector('table');
-
-
-
+const browsingTable = document.querySelector(".appendedBookInfo");
 
 let myLibrary = [];
 // objects will be pushed into this.
 
-function book(bookTitle, authorName, pages, haveYouReadIt) {
-    //constructor
-    this.title = bookTitle.value,
-    this.author = authorName.value,
-    this.pages = pages.value,
-    this.haveRead = haveYouReadIt.checked
-}
+class book {
+  constructor(bookTitle, authorName, pages, haveYouReadIt) {
+    this.createBookRow(bookTitle, authorName, pages, haveYouReadIt);
+  }
+  //createBookRow(bookTitle, authorName, pages, haveYouReadIt)
+  // constructor function to create row via dom manipulation
+  createBookRow(bookTitle, authorName, pages, haveYouReadIt) {
+    let bookRowDiv = document.createElement("div");
+    bookRowDiv.classList.add("appendedBooks");
 
-function addBookToLibrary() {
-    // do stuff here like appending a new div in order to display the object created in the newbook function
-    browsingTable.innerHTML = "";
-    
-    myLibrary.push(new book(bookTitle, authorName, pages, haveYouReadIt));
-    for(let i=0; i < myLibrary.length;i++) {
-        let template = `
-                    <tr class="appendedBooks">
-                        <td>${myLibrary[i].title}</td>
-                        <td>${myLibrary[i].author}</td>
-                        <td>${myLibrary[i].pages}</td>
-                        <td>${myLibrary[i].haveRead}</td>
-                        <td><button>press me</button></td>
-                    </tr>`
-        browsingTable.innerHTML += template;
-    }
-    
-    
+    let bookRowDivTitle = document.createElement("div");
+    bookRowDivTitle.innerText = bookTitle;
+    bookRowDiv.appendChild(bookRowDivTitle);
 
-    //addRow();
-    resetInputs();
-}
+    let bookRowDivAuthor = document.createElement("div");
+    bookRowDivAuthor.innerText = authorName;
+    bookRowDiv.append(bookRowDivAuthor);
 
+    let bookRowDivPages = document.createElement("div");
+    bookRowDivPages.innerText = pages;
+    bookRowDiv.appendChild(bookRowDivPages);
 
-function addRow() {
-    
-    let template = `
-                    <tr class="appendedBooks">
-                        <td>${bookTitle.value}</td>
-                        <td>${authorName.value}</td>
-                        <td>${pages.value}</td>
-                        <td>${haveYouReadIt.checked}</td>
-                        <td><button>press me</button></td>
-                    </tr>`
-    browsingTable.innerHTML += template;
+    console.log(haveYouReadIt);
+    let bookRowDivHaveYouReadIt = document.createElement("div");
+    bookRowDivHaveYouReadIt.innerText = haveYouReadIt;
+    bookRowDiv.appendChild(bookRowDivHaveYouReadIt);
 
+    let deleteButton = document.createElement("button");
+    deleteButton.classList.add("deleteBtn");
+    deleteButton.innerText = "x";
+    bookRowDiv.appendChild(deleteButton);
+    deleteButton.addEventListener("click", () => {
+      deleteButton.parentElement.remove();
+    });
+
+    browsingTable.appendChild(bookRowDiv);
+  }
+  removeBook() {}
+  changeReadStatus() {}
 }
 
 function removeBook() {
-    // recommended to give them a data-attribute that corresponds to the index of the library array
+  // recommended to give them a data-attribute that corresponds to the index of the library array
 }
 
 function changeReadStatus() {
-    // button that toggles whether a book has been read or not on the book prototype instance
+  // button that toggles whether a book has been read or not on the book prototype instance
 }
 
 function resetInputs() {
-    bookTitle.value = "What is the title of the book?";
-    authorName.value = "Who is the author of the book?";
-    pages.value = "How many pages are in the book?";
-    haveYouReadIt.checked = false;
-
+  bookTitle.value = "";
+  authorName.value = "";
+  pages.value = "";
+  haveYouReadIt.checked = false;
 }
 
-addBookBtn.addEventListener('click', addBookToLibrary);
+function check() {
+  event.preventDefault();
+  console.log("poop");
+  if (bookTitle.value !== "" && authorName.value !== "" && pages.value !== "") {
+    new book(
+      bookTitle.value,
+      authorName.value,
+      pages.value,
+      haveYouReadIt.checked
+    );
+    //new book(bookTitle.value, authorName.value, pages.value, haveYouReadIt.checked);
+    resetInputs();
+  } else {
+    alert("please ensure all fields are filled");
+  }
+}
+
+/// submit is the required event to enable built in form verification
+bookForm.addEventListener('submit', () => {
+    event.preventDefault();
+    check();
+});
+//addBookBtn.addEventListener("click", check);
+
+
